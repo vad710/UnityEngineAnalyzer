@@ -3,34 +3,28 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 using NUnit.Framework;
 using RoslynNUnitLight;
-using UnityEngineAnalyzer.FindMethodsInUpdate;
+using UnityEngineAnalyzer.Language;
 
 
 //using Microsoft.CodeAnalysis.Workspaces;
 
-namespace UnityEngineAnalyzer.Test.FindMethodsInUpdate
+namespace UnityEngineAnalyzer.Test.Language
 {
     [TestFixture]
-    sealed class DoNotUseFindMethodsInUpdateAnalyzerTests : AnalyzerTestFixture
+    sealed class StructImplementationAnalyzerTests : AnalyzerTestFixture
     {
 
         protected override string LanguageName => LanguageNames.CSharp;
-        protected override DiagnosticAnalyzer CreateAnalyzer() => new DoNotUseFindMethodsInUpdateAnalyzer();
+        protected override DiagnosticAnalyzer CreateAnalyzer() => new StructImplementAnalyzer();
 
         [Test]
-        public void GameObjectFindInUpdate()
+        public void StructDoNotImplementIEquatable()
         {
             var code = @"
 using UnityEngine;
 
-class C : MonoBehaviour
+struct [|S|]
 {
-    void Update()
-    {
-        [|GameObject.Find(""param"")|];
-
-        //var result = GameObject.Find(""param"");
-    }
 }";
 
             Document document;
@@ -39,7 +33,35 @@ class C : MonoBehaviour
             if (TestHelpers.TryGetDocumentAndSpanFromMarkup(code, LanguageName, MetadataReferenceHelper.UsingUnityEngine,
                 out document, out span))
             {
-                HasDiagnostic(document, span, DiagnosticIDs.DoNotUseFindMethodsInUpdate);
+                HasDiagnostic(document, span, DiagnosticIDs.StructShouldImplementIEquatable);
+            }
+            else
+            {
+                Assert.Fail("Could not load unit test code");
+            }
+        }
+
+
+
+        [Test]
+        public void StructDoImplementIEquatable()
+        {
+            var code = @"
+using UnityEngine;
+using System;
+
+struct [|S|] : IEquatable<S>
+{
+    public bool Equals(S other) { return false; }
+}";
+
+            Document document;
+            TextSpan span;
+
+            if (TestHelpers.TryGetDocumentAndSpanFromMarkup(code, LanguageName, MetadataReferenceHelper.UsingUnityEngine,
+                out document, out span))
+            {
+                NoDiagnostic(document, DiagnosticIDs.StructShouldImplementIEquatable);
             }
             else
             {
@@ -49,23 +71,16 @@ class C : MonoBehaviour
 
 
         [Test]
-        public void GameObjectFindInUpdateRecursive()
+        public void StructDoNotImplementCorrectIEquatable()
         {
             var code = @"
 using UnityEngine;
+using System;
 
-class C : MonoBehaviour
+
+struct [|S|] : IEquatable<int>
 {
-    void Update()
-    {
-        [|MyMethod()|];
-        //var result = GameObject.Find(""param"");
-    }
-
-    void MyMethod()
-    {
-        GameObject.Find(""param"");
-    }
+    public bool Equals(int other) { return false; }
 }";
 
             Document document;
@@ -74,33 +89,13 @@ class C : MonoBehaviour
             if (TestHelpers.TryGetDocumentAndSpanFromMarkup(code, LanguageName, MetadataReferenceHelper.UsingUnityEngine,
                 out document, out span))
             {
-                HasDiagnostic(document, span, DiagnosticIDs.DoNotUseFindMethodsInUpdate);
+                HasDiagnostic(document, span, DiagnosticIDs.StructShouldImplementIEquatable);
             }
             else
             {
                 Assert.Fail("Could not load unit test code");
             }
         }
-
-
-        [Test]
-        public void GameObjectFindInStart()
-        {
-            const string code = @"
-using UnityEngine;
-
-class C : MonoBehaviour
-{
-    void Start()
-    {
-        [|GameObject.Find("")|];
-    }
-}";
-            Document document;
-            TextSpan span;
-            TestHelpers.TryGetDocumentAndSpanFromMarkup(code, LanguageName, MetadataReferenceHelper.UsingUnityEngine, out document, out span);
-
-            NoDiagnostic(document, DiagnosticIDs.EmptyMonoBehaviourMethod);
-        }
+        
     }
 }

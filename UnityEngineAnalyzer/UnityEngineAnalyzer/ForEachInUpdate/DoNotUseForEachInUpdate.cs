@@ -23,6 +23,8 @@ namespace UnityEngineAnalyzer.ForEachInUpdate
         {
             var monoBehaviourInfo = new MonoBehaviourInfo(context);
 
+            
+
             var searched = new Dictionary<IMethodSymbol, bool>();
             monoBehaviourInfo.ForEachUpdateMethod((updateMethod) =>
             {

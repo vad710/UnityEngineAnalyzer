@@ -74,6 +74,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DoNotUseCoroutinesResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Delegates\ShouldCacheDelegateAnalyzer.cs" />
+    <Compile Include="Delegates\ShouldCacheDelegateResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShouldCacheDelegateResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="DiagnosticCategories.cs" />
     <Compile Include="DiagnosticDescriptors.cs" />
     <Compile Include="DiagnosticIDs.cs" />
@@ -95,11 +101,37 @@
       <DependentUpon>DoNotUseForEachInUpdateResources.resx</DependentUpon>
     </Compile>
     <Compile Include="ForEachInUpdate\DoNotUseForEachInUpdate.cs" />
+    <Compile Include="GCAlloc\DoNoGCAllocInUpdateAnalyzer.cs" />
+    <Compile Include="GCAlloc\DoNotGCAllocInUpdateResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DoNotGCAllocInUpdateResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GCAlloc\DoNotBoxWhenInvokeAnalyzer.cs" />
+    <Compile Include="GCAlloc\DoNotBoxWhenInvokeResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DoNotBoxWhenInvokeResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Generics\DoNotUseEnumTypeParameterAnalyzer.cs" />
+    <Compile Include="Generics\DoNotUseEnumTypeParameterResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DoNotUseEnumTypeParameterResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="IL2CPP\UnsealedDerivedClassAnalyzer.cs" />
     <Compile Include="IL2CPP\UnsealedDerivedClassResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UnsealedDerivedClassResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Language\StructOverrideGetHashCodeAnalyzer.cs" />
+    <Compile Include="Language\StructOverrideEqualsObjectAnalyzer.cs" />
+    <Compile Include="Language\StructImplementationAnalyzer.cs" />
+    <Compile Include="Language\StructAnalyzerResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StructAnalyzerResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Material\DoNotUseStringPropertyNamesAnalyzer.cs" />
     <Compile Include="Material\DoNotUseStringPropertyNamesResource.Designer.cs">
@@ -161,6 +193,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>UseCompareTagResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Delegates\ShouldCacheDelegateResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ShouldCacheDelegateResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="EmptyMonoBehaviourMethods\EmptyMonoBehaviourMethodsResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>EmptyMonoBehaviourMethodsResources.Designer.cs</LastGenOutput>
@@ -177,9 +213,25 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DoNotUseCoroutinesResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="GCAlloc\DoNotGCAllocInUpdateResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DoNotGCAllocInUpdateResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GCAlloc\DoNotBoxWhenInvokeResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DoNotBoxWhenInvokeResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generics\DoNotUseEnumTypeParameterResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DoNotUseEnumTypeParameterResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="IL2CPP\UnsealedDerivedClassResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>UnsealedDerivedClassResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Language\StructAnalyzerResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StructAnalyzerResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Material\DoNotUseStringPropertyNamesResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -266,6 +318,7 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\v4.6\Microsoft.Portable.CSharp.targets" />
   <Target Name="AfterBuild">

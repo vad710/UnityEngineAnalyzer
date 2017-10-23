@@ -11,14 +11,14 @@ using UnityEngineAnalyzer.FindMethodsInUpdate;
 namespace UnityEngineAnalyzer.Test.FindMethodsInUpdate
 {
     [TestFixture]
-    sealed class DoNotUseFindMethodsInUpdateAnalyzerTests : AnalyzerTestFixture
+    sealed class DoNotUseCameraMainInUpdateAnalyzerTests : AnalyzerTestFixture
     {
 
         protected override string LanguageName => LanguageNames.CSharp;
-        protected override DiagnosticAnalyzer CreateAnalyzer() => new DoNotUseFindMethodsInUpdateAnalyzer();
+        protected override DiagnosticAnalyzer CreateAnalyzer() => new DoNotUseCameraMainInUpdateAnalyzer();
 
         [Test]
-        public void GameObjectFindInUpdate()
+        public void CameraMainInUpdate()
         {
             var code = @"
 using UnityEngine;
@@ -27,7 +27,7 @@ class C : MonoBehaviour
 {
     void Update()
     {
-        [|GameObject.Find(""param"")|];
+        Camera main = [|Camera.main|];
 
         //var result = GameObject.Find(""param"");
     }
@@ -39,7 +39,7 @@ class C : MonoBehaviour
             if (TestHelpers.TryGetDocumentAndSpanFromMarkup(code, LanguageName, MetadataReferenceHelper.UsingUnityEngine,
                 out document, out span))
             {
-                HasDiagnostic(document, span, DiagnosticIDs.DoNotUseFindMethodsInUpdate);
+                HasDiagnostic(document, span, DiagnosticIDs.DoNotUseCameraMainInUpdate);
             }
             else
             {
@@ -49,7 +49,7 @@ class C : MonoBehaviour
 
 
         [Test]
-        public void GameObjectFindInUpdateRecursive()
+        public void CameraMainInUpdateRecursive()
         {
             var code = @"
 using UnityEngine;
@@ -64,7 +64,7 @@ class C : MonoBehaviour
 
     void MyMethod()
     {
-        GameObject.Find(""param"");
+        Camera main = Camera.main;
     }
 }";
 
@@ -74,33 +74,13 @@ class C : MonoBehaviour
             if (TestHelpers.TryGetDocumentAndSpanFromMarkup(code, LanguageName, MetadataReferenceHelper.UsingUnityEngine,
                 out document, out span))
             {
-                HasDiagnostic(document, span, DiagnosticIDs.DoNotUseFindMethodsInUpdate);
+                HasDiagnostic(document, span, DiagnosticIDs.DoNotUseCameraMainInUpdate);
             }
             else
             {
                 Assert.Fail("Could not load unit test code");
             }
         }
-
-
-        [Test]
-        public void GameObjectFindInStart()
-        {
-            const string code = @"
-using UnityEngine;
-
-class C : MonoBehaviour
-{
-    void Start()
-    {
-        [|GameObject.Find("")|];
-    }
-}";
-            Document document;
-            TextSpan span;
-            TestHelpers.TryGetDocumentAndSpanFromMarkup(code, LanguageName, MetadataReferenceHelper.UsingUnityEngine, out document, out span);
-
-            NoDiagnostic(document, DiagnosticIDs.EmptyMonoBehaviourMethod);
-        }
+        
     }
 }

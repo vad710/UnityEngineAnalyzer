@@ -21,7 +21,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -133,9 +133,17 @@
     <Compile Include="Camera\CameraMainAnalyzerTests.cs" />
     <Compile Include="CompareTag\UseCompareTagAnalyzerTests.cs" />
     <Compile Include="Coroutines\DoNotUseCoroutinesAnalyzerTests.cs" />
+    <Compile Include="Delegates\ShouldCacheDelegateAnalyzerTests.cs" />
     <Compile Include="EmptyMonoBehaviourMethods\EmptyMonoBehaviourMethodsAnalyzerTests.cs" />
     <Compile Include="FindMethodsInUpdate\DoNotUseFindMethodsInUpdateAnalyzerTests.cs" />
     <Compile Include="ForEachInUpdate\DoNotUseForeachInUpdateAnalyzerTests.cs" />
+    <Compile Include="GCAlloc\DoNotBoxWhenInvokeAnalyzerTests.cs" />
+    <Compile Include="GCAlloc\DoNotGCAllocInUpdateAnalyzerTests.cs" />
+    <Compile Include="Generics\DoNotUseEnumTypeParameterAnalyzerTests.cs" />
+    <Compile Include="IL2CPP\UnsealedDerivedClassAnalyzerTests.cs" />
+    <Compile Include="Language\StructOverrideEqualsGetHashCodeAnalyzerTest.cs" />
+    <Compile Include="Language\StructOverrideEqualsObjectAnalyzerTest.cs" />
+    <Compile Include="Language\StructImplementAnalyzerTest.cs" />
     <Compile Include="Material\DoNotUseStringPropertyNamesTests.cs" />
     <Compile Include="MetadataReferenceHelper.cs" />
     <Compile Include="OnGUI\DoNotUseOnGUIAnalyzerTests.cs" />

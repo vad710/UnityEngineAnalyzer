@@ -1,4 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Linq;
 using System.Resources;
@@ -15,6 +15,10 @@ using UnityEngineAnalyzer.Material;
 using UnityEngineAnalyzer.OnGUI;
 using UnityEngineAnalyzer.Physics;
 using UnityEngineAnalyzer.StringMethods;
+using UnityEngineAnalyzer.Language;
+using UnityEngineAnalyzer.GCAlloc;
+using UnityEngineAnalyzer.Generics;
+using UnityEngineAnalyzer.Delegates;
 
 namespace UnityEngineAnalyzer
 {
@@ -37,6 +41,14 @@ namespace UnityEngineAnalyzer
         public static readonly DiagnosticDescriptor DoNotUseStringPropertyNames;
         public static readonly DiagnosticDescriptor UseNonAllocMethods;
         public static readonly DiagnosticDescriptor CameraMainIsSlow;
+        public static readonly DiagnosticDescriptor DoNotGCAllocnInUpdate;
+        public static readonly DiagnosticDescriptor DoNotGCAllocnInUpdateRecursive;
+        public static readonly DiagnosticDescriptor DoNotBoxWhenInvoke;
+        public static readonly DiagnosticDescriptor StructShouldImplementIEquatable;
+        public static readonly DiagnosticDescriptor StructShouldOverrideEquals;
+        public static readonly DiagnosticDescriptor StructShouldOverrideGetHashCode;
+        public static readonly DiagnosticDescriptor DoNotUseEnumTypeParameter;
+        public static readonly DiagnosticDescriptor ShouldCacheDelegate;
 
         static DiagnosticDescriptors()
         {
@@ -49,6 +61,10 @@ namespace UnityEngineAnalyzer
             UseCompareTag = CreateDiagnosticDescriptor<UseCompareTagResources>(DiagnosticIDs.UseCompareTag, DiagnosticCategories.GC, DiagnosticSeverity.Warning);
             UseNonAllocMethods = CreateDiagnosticDescriptor<UseNonAllocMethodsResources>(DiagnosticIDs.PhysicsUseNonAllocMethods, DiagnosticCategories.GC, DiagnosticSeverity.Warning, UnityVersion.UNITY_5_3);
             CameraMainIsSlow = CreateDiagnosticDescriptor<CameraMainResource>(DiagnosticIDs.CameraMainIsSlow, DiagnosticCategories.GC, DiagnosticSeverity.Warning);
+            DoNotGCAllocnInUpdate = CreateDiagnosticDescriptor<DoNotGCAllocInUpdateResources>(DiagnosticIDs.DoNotGCAllocInUpdate, DiagnosticCategories.GC, DiagnosticSeverity.Warning);
+            DoNotGCAllocnInUpdateRecursive = CreateDiagnosticDescriptor<DoNotGCAllocInUpdateResources>(DiagnosticIDs.DoNotGCAllocInUpdate, DiagnosticCategories.GC, DiagnosticSeverity.Warning);
+            DoNotBoxWhenInvoke = CreateDiagnosticDescriptor<DoNotBoxWhenInvokeResource>(DiagnosticIDs.DoNotBoxWhenInvoke, DiagnosticCategories.GC, DiagnosticSeverity.Warning);
+            ShouldCacheDelegate = CreateDiagnosticDescriptor<ShouldCacheDelegateResource>(DiagnosticIDs.ShouldCacheDelegate, DiagnosticCategories.GC, DiagnosticSeverity.Warning);
 
             //Performance
             DoNotUseFindMethodsInUpdate = CreateDiagnosticDescriptor<DoNotUseFindMethodsInUpdateResources>(DiagnosticIDs.DoNotUseFindMethodsInUpdate, DiagnosticCategories.Performance, DiagnosticSeverity.Warning);
@@ -61,6 +77,10 @@ namespace UnityEngineAnalyzer
 
             //Miscellaneous
             EmptyMonoBehaviourMethod = CreateDiagnosticDescriptor<EmptyMonoBehaviourMethodsResources>(DiagnosticIDs.EmptyMonoBehaviourMethod, DiagnosticCategories.Miscellaneous, DiagnosticSeverity.Warning);
+            StructShouldImplementIEquatable = CreateDiagnosticDescriptor<StructAnalyzerResources>(DiagnosticIDs.StructShouldImplementIEquatable, DiagnosticCategories.Miscellaneous, DiagnosticSeverity.Warning);
+            StructShouldOverrideEquals = CreateDiagnosticDescriptor<StructAnalyzerResources>(DiagnosticIDs.StructShouldOverrideEquals, DiagnosticCategories.Miscellaneous, DiagnosticSeverity.Warning);
+            StructShouldOverrideGetHashCode = CreateDiagnosticDescriptor<StructAnalyzerResources>(DiagnosticIDs.StructShouldOverrideGetHashCode, DiagnosticCategories.Miscellaneous, DiagnosticSeverity.Warning);
+            DoNotUseEnumTypeParameter = CreateDiagnosticDescriptor<DoNotUseEnumTypeParameterResource>(DiagnosticIDs.DoNoUseEnumTypeParameter, DiagnosticCategories.Miscellaneous, DiagnosticSeverity.Warning);
 
             //** AOT **
             DoNotUseRemoting = CreateDiagnosticDescriptor<DoNotUseRemotingResources>(DiagnosticIDs.DoNotUseRemoting, DiagnosticCategories.AOT, DiagnosticSeverity.Info);
@@ -104,3 +124,4 @@ namespace UnityEngineAnalyzer
         }
     }
 }
+

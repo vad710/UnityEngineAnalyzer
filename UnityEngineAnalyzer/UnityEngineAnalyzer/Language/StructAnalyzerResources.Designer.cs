@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnityEngineAnalyzer.FindMethodsInUpdate {
+namespace UnityEngineAnalyzer.Language {
     using System;
     using System.Reflection;
     
@@ -23,14 +23,14 @@ namespace UnityEngineAnalyzer.FindMethodsInUpdate {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class DoNotUseFindMethodsInUpdateResources {
+    internal class StructAnalyzerResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DoNotUseFindMethodsInUpdateResources() {
+        internal StructAnalyzerResources() {
         }
         
         /// <summary>
@@ -40,7 +40,7 @@ namespace UnityEngineAnalyzer.FindMethodsInUpdate {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UnityEngineAnalyzer.FindMethodsInUpdate.DoNotUseFindMethodsInUpdateResources", typeof(DoNotUseFindMethodsInUpdateResources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UnityEngineAnalyzer.Language.StructAnalyzerResources", typeof(StructAnalyzerResources).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,7 +62,7 @@ namespace UnityEngineAnalyzer.FindMethodsInUpdate {
         }
         
         /// <summary>
-        ///   查找类似 Using Find or GetComponent in Update methods can impact performance. Cache the result on Start or Awake methods 的本地化字符串。
+        ///   查找类似 Inappropriate Struct implementation can impact performance 的本地化字符串。
         /// </summary>
         internal static string Description {
             get {
@@ -71,25 +71,34 @@ namespace UnityEngineAnalyzer.FindMethodsInUpdate {
         }
         
         /// <summary>
-        ///   查找类似 The method {0} is called from {1}.{2} which could cause performance problems. Cache the result from {0} in Start or Awake instead. 的本地化字符串。
+        ///   查找类似 Struct {0} should implement IEquatable to avoid boxing in case Equals(object o) is called. 的本地化字符串。
         /// </summary>
-        internal static string MessageFormat {
+        internal static string ShouldImplmentIEquatable {
             get {
-                return ResourceManager.GetString("MessageFormat", resourceCulture);
+                return ResourceManager.GetString("ShouldImplmentIEquatable", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 The method {0}.{1} calls {2} which eventually calls {3} which could impact performance. Cache the result from {3}&apos;s {2} in Start or Awake instead. 的本地化字符串。
+        ///   查找类似 Struct {0} should override Equals(object o) because its default implementation may use reflection and is not efficient 的本地化字符串。
         /// </summary>
-        internal static string MessageFormatRecursive {
+        internal static string ShouldOverrideEquals {
             get {
-                return ResourceManager.GetString("MessageFormatRecursive", resourceCulture);
+                return ResourceManager.GetString("ShouldOverrideEquals", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Cache the result of Find or GetComponent in Start or Awake. 的本地化字符串。
+        ///   查找类似 Struct {0} should override GetHashCode() because its default implementation may use reflection and is not efficient 的本地化字符串。
+        /// </summary>
+        internal static string ShouldOverrideGetHashCode {
+            get {
+                return ResourceManager.GetString("ShouldOverrideGetHashCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Inappropriate Struct implementation 的本地化字符串。
         /// </summary>
         internal static string Title {
             get {

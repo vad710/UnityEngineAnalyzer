@@ -118,18 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Description" xml:space="preserve">
-    <value>Using Find or GetComponent in Update methods can impact performance. Cache the result on Start or Awake methods</value>
+    <value>Prefer to use integer type (short or int) as TypeParameter, and convert it between Enum type. This can reduce code size, and you don't need to pass additional IEqualityComparer for your Enum for your container.</value>
     <comment>An optional longer localizable description of the diagnostic.</comment>
   </data>
   <data name="MessageFormat" xml:space="preserve">
-    <value>The method {0} is called from {1}.{2} which could cause performance problems. Cache the result from {0} in Start or Awake instead.</value>
+    <value>Change {0} to integer type (short or int) as TypeParameter</value>
     <comment>The format-able message the diagnostic displays.</comment>
   </data>
-  <data name="MessageFormatRecursive" xml:space="preserve">
-    <value>The method {0}.{1} calls {2} which eventually calls {3} which could impact performance. Cache the result from {3}'s {2} in Start or Awake instead.</value>
-  </data>
   <data name="Title" xml:space="preserve">
-    <value>Cache the result of Find or GetComponent in Start or Awake.</value>
+    <value>Use integer type instead of Enum as TypeParameter</value>
     <comment>The title of the diagnostic.</comment>
   </data>
 </root>

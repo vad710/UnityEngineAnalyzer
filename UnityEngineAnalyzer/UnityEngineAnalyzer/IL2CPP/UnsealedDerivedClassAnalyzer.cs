@@ -28,7 +28,7 @@ namespace UnityEngineAnalyzer.IL2CPP
 
                     if (method.IsOverriden() && !method.IsSealed())
                     {
-                        var diagnostic = Diagnostic.Create(SupportedDiagnostics.First(), method.GetLocation(),
+                        var diagnostic = Diagnostic.Create(SupportedDiagnostics.First(), method.Identifier.GetLocation(),
                             method.Identifier.ToString(), classDeclaration.Identifier.ToString());
 
                         context.ReportDiagnostic(diagnostic);
